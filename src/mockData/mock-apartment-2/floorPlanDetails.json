@@ -1,5 +1,5 @@
 {
-  "floorPlan": "./plan.jpeg",
+  "floorPlan": "./floor-plan.jpeg",
   "views": [
     {
       "viewIndex": 1,
@@ -19,5 +19,6 @@
       "y": 75,
       "degrees": 0
     }
-  ]
+  ],
+  "apartmentId": 2
 }

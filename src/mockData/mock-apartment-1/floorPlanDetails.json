@@ -1,0 +1,24 @@
+{
+  "floorPlan": "./plan.jpeg",
+  "views": [
+    {
+      "viewIndex": 1,
+      "x": 40,
+      "y": 0,
+      "degrees": 0
+    },
+    {
+      "viewIndex": 2,
+      "x": 50,
+      "y": 75,
+      "degrees": 180
+    },
+    {
+      "viewIndex": 3,
+      "x": 25,
+      "y": 75,
+      "degrees": 0
+    }
+  ],
+  "apartmentId": 1
+}

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import floorPlan from '../assets/mock-apartment-2/plan.jpeg';
-import { getImage } from '../getImage';
-import { Coords } from '../apiServices/getViewDetails';
+import { getFloorPlan } from "../getFloorPlan";
+import { getImage } from "../getImage";
+import { Coords } from "../apiServices/getViewDetails";
 
 const Wrapper = styled.div`
   width: 700px;
@@ -41,15 +41,19 @@ const FloorPlanDot = styled.div`
 
 type ViewProps = {
   coords: Coords;
+  apartmentId: number;
 };
 
 export function View(props: ViewProps) {
   return (
     <Wrapper>
-      <RoomView src={getImage(props.coords.viewIndex)} alt="apartment view" />
+      <RoomView
+        src={getImage(props.apartmentId, props.coords.viewIndex)}
+        alt="apartment view"
+      />
       <FloorPlanWrapper>
         <FloorPlanDot coords={props.coords} />
-        <FloorPlan src={floorPlan} alt="floor plan" />
+        <FloorPlan src={getFloorPlan(props.apartmentId)} alt="floor plan" />
       </FloorPlanWrapper>
     </Wrapper>
   );

@@ -51,7 +51,7 @@ function App() {
         data: undefined,
         error: undefined,
       });
-      const getViewDetailsResponse = await getViewDetails(0);
+      const getViewDetailsResponse = await getViewDetails(1);
       setGetViewDetailsProcess({
         status: status.SUCCESS,
         data: getViewDetailsResponse as ViewDetails,
@@ -86,41 +86,49 @@ function App() {
     }
   };
 
-  switch (getViewDetailsProcess.status) {
-    case status.INITIAL: {
-      return <div />;
+  const getViewSection = () => {
+    switch (getViewDetailsProcess.status) {
+      case status.INITIAL: {
+        return <div />;
+      }
+      case status.LOADING: {
+        return (
+          <div>
+            <h5>...</h5>
+          </div>
+        );
+      }
+      case status.SUCCESS: {
+        return (
+          <>
+            <NavigationButton
+              onClick={handlePreviousClick}
+              title="previous view"
+            >
+              <h5>&lt;</h5>
+            </NavigationButton>
+            <View
+              coords={getViewDetailsProcess.data!.views[currentImageIndex]!}
+              apartmentId={getViewDetailsProcess.data!.apartmentId}
+            />
+            <NavigationButton onClick={handleNextClick} title="next view">
+              <h5>&gt;</h5>
+            </NavigationButton>
+          </>
+        );
+      }
+      case status.ERROR: {
+        return (
+          <div>
+            <h5>Could not fetch view</h5>
+            <button onClick={fetchViewDetails}>try again</button>
+          </div>
+        );
+      }
     }
-    case status.LOADING: {
-      return (
-        <div>
-          <h5>...</h5>
-        </div>
-      );
-    }
-    case status.SUCCESS: {
-      return (
-        <Wrapper>
-          <NavigationButton onClick={handlePreviousClick} title="previous view">
-            <h5>&lt;</h5>
-          </NavigationButton>
-          <View
-            coords={getViewDetailsProcess.data!.views[currentImageIndex]!}
-          />
-          <NavigationButton onClick={handleNextClick} title="next view">
-            <h5>&gt;</h5>
-          </NavigationButton>
-        </Wrapper>
-      );
-    }
-    case status.ERROR: {
-      return (
-        <div>
-          <h5>Could not fetch view</h5>
-          <button onClick={fetchViewDetails}>try again</button>
-        </div>
-      );
-    }
-  }
+  };
+
+  return <Wrapper>{getViewSection()}</Wrapper>;
 }
 
 export default App;
