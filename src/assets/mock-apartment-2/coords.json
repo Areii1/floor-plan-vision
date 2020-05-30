@@ -1,5 +1,6 @@
-
-  [
+{
+  "floorPlan": "./plan.jpeg",
+  "views": [
     {
       "viewIndex": 1,
       "x": 40,
@@ -19,3 +20,4 @@
       "degrees": 0
     }
   ]
+}
