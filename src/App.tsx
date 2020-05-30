@@ -79,6 +79,7 @@ function App() {
         data: undefined,
         error: undefined,
       });
+      setCurrentImageIndex(0);
       const getViewDetailsResponse = await getViewDetails(id);
       setGetViewDetailsProcess({
         status: status.SUCCESS,
