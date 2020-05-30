@@ -39,8 +39,13 @@ const ApartmentNavigationListButton = styled.button`
   cursor: pointer;
 `;
 
+type ApartmentNavigationListButtonTextProps = {
+  active: boolean;
+};
+
 const ApartmentNavigationListButtonText = styled.h3`
-  color: blue;
+  color: ${(props: ApartmentNavigationListButtonTextProps) =>
+    props.active ? "black" : "blue"};
 `;
 
 enum status {
@@ -155,33 +160,34 @@ function App() {
     <Wrapper>
       <ApartmentNavigationList>
         <li>
-          <ApartmentNavigationListButton>
+          <ApartmentNavigationListButton onClick={() => fetchViewDetails(1)}>
             <ApartmentNavigationListButtonText
-              onClick={() => fetchViewDetails(1)}
+              active={getViewDetailsProcess.data?.apartmentId === 1}
             >
               apartment 1
             </ApartmentNavigationListButtonText>
           </ApartmentNavigationListButton>
         </li>
         <li>
-          <ApartmentNavigationListButton>
+          <ApartmentNavigationListButton onClick={() => fetchViewDetails(2)}>
             <ApartmentNavigationListButtonText
-              onClick={() => fetchViewDetails(2)}
+              active={getViewDetailsProcess.data?.apartmentId === 2}
             >
               apartment 2
             </ApartmentNavigationListButtonText>
           </ApartmentNavigationListButton>
         </li>
         <li>
-          <ApartmentNavigationListButton>
+          <ApartmentNavigationListButton onClick={() => fetchViewDetails(3)}>
             <ApartmentNavigationListButtonText
-              onClick={() => fetchViewDetails(3)}
+              active={getViewDetailsProcess.data?.apartmentId === 3}
             >
               apartment 3
             </ApartmentNavigationListButtonText>
           </ApartmentNavigationListButton>
         </li>
       </ApartmentNavigationList>
+      <h4>{`${currentImageIndex + 1}/${getViewDetailsProcess.data?.views?.length}`}</h4>
       {getViewSection()}
     </Wrapper>
   );

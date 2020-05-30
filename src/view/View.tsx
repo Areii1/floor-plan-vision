@@ -13,18 +13,17 @@ const RoomView = styled.img`
   max-height: 700px;
 `;
 
-const FloorPlan = styled.img`
-  max-width: 200px;
-  max-height: 200px;
-`;
-
 const FloorPlanWrapper = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
   margin-left: 20px;
   display: flex;
   align-items: flex-end;
+  display: inline-block;
+`;
+
+const FloorPlan = styled.img`
+  max-width: 200px;
+  max-height: 200px;
 `;
 
 type FloorPlanDotProps = {
