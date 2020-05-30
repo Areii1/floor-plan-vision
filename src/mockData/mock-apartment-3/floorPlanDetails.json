@@ -11,12 +11,12 @@
       "viewIndex": 2,
       "x": 50,
       "y": 75,
-      "degrees": 180
+      "degrees": 0
     },
     {
       "viewIndex": 3,
-      "x": 25,
-      "y": 75,
+      "x": 60,
+      "y": 85,
       "degrees": 0
     }
   ],

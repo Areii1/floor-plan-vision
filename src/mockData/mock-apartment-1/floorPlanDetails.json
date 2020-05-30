@@ -3,20 +3,20 @@
   "views": [
     {
       "viewIndex": 1,
-      "x": 40,
-      "y": 0,
+      "x": 30,
+      "y": 10,
       "degrees": 0
     },
     {
       "viewIndex": 2,
-      "x": 50,
+      "x": 70,
       "y": 75,
       "degrees": 180
     },
     {
       "viewIndex": 3,
-      "x": 25,
-      "y": 75,
+      "x": 30,
+      "y": 80,
       "degrees": 0
     }
   ],

@@ -17,7 +17,7 @@ export type ViewDetails = {
 
 export const getViewDetails = (id: number): Promise<ViewDetails | Error> => {
   const newPromise = new Promise<ViewDetails | Error>((resolve, reject) => {
-    const waitTime = Math.random() * 3000;
+    const waitTime = Math.random() * 1000;
     setTimeout(() => {
       if (Math.random() < 0.9) {
         switch (id) {
@@ -32,6 +32,9 @@ export const getViewDetails = (id: number): Promise<ViewDetails | Error> => {
           case 3: {
             resolve(viewDetails3 as ViewDetails);
             break;
+          }
+          default: {
+            reject(new Error("could not fetch view details"));
           }
         }
       } else {

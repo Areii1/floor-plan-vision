@@ -150,7 +150,7 @@ function App() {
         return (
           <div>
             <h5>Could not fetch view</h5>
-            <button onClick={() => fetchViewDetails(0)}>try again</button>
+            <button onClick={() => fetchViewDetails(1)}>try again</button>
           </div>
         );
       }
