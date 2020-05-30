@@ -139,6 +139,8 @@ function App() {
             <View
               coords={getViewDetailsProcess.data!.views[currentImageIndex]!}
               apartmentId={getViewDetailsProcess.data!.apartmentId}
+              viewsLength={getViewDetailsProcess.data!.views.length}
+              currentImageIndex={currentImageIndex}
             />
             <NavigationButton onClick={handleNextClick} title="next view">
               <h5>&gt;</h5>
@@ -157,13 +159,18 @@ function App() {
     }
   };
 
+  const currentApartmentId =
+    getViewDetailsProcess.status === status.SUCCESS
+      ? getViewDetailsProcess.data!.apartmentId
+      : 1;
+
   return (
     <Wrapper>
       <ApartmentNavigationList>
         <li>
           <ApartmentNavigationListButton onClick={() => fetchViewDetails(1)}>
             <ApartmentNavigationListButtonText
-              active={getViewDetailsProcess.data?.apartmentId === 1}
+              active={currentApartmentId === 1}
             >
               apartment 1
             </ApartmentNavigationListButtonText>
@@ -172,7 +179,7 @@ function App() {
         <li>
           <ApartmentNavigationListButton onClick={() => fetchViewDetails(2)}>
             <ApartmentNavigationListButtonText
-              active={getViewDetailsProcess.data?.apartmentId === 2}
+              active={currentApartmentId === 2}
             >
               apartment 2
             </ApartmentNavigationListButtonText>
@@ -181,14 +188,13 @@ function App() {
         <li>
           <ApartmentNavigationListButton onClick={() => fetchViewDetails(3)}>
             <ApartmentNavigationListButtonText
-              active={getViewDetailsProcess.data?.apartmentId === 3}
+              active={currentApartmentId === 3}
             >
               apartment 3
             </ApartmentNavigationListButtonText>
           </ApartmentNavigationListButton>
         </li>
       </ApartmentNavigationList>
-      <h4>{`${currentImageIndex + 1}/${getViewDetailsProcess.data?.views?.length}`}</h4>
       {getViewSection()}
     </Wrapper>
   );

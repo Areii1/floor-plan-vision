@@ -59,6 +59,8 @@ const FloorPlanDot = styled.div`
 type ViewProps = {
   coords: Coords;
   apartmentId: number;
+  currentImageIndex: number;
+  viewsLength: number;
 };
 
 export function View(props: ViewProps) {
@@ -82,6 +84,7 @@ export function View(props: ViewProps) {
   };
   return (
     <Wrapper>
+      <h4>{`${props.currentImageIndex + 1}/${props.viewsLength}`}</h4>
       <RoomView
         src={getImage(props.apartmentId, props.coords.viewIndex)}
         alt="apartment view"
