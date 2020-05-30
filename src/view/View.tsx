@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import floorPlan from '../assets/mock-apartment-2/plan.jpeg';
 import { getImage } from '../getImage';
+import { Coords } from '../apiServices/getViewDetails';
 
 const Wrapper = styled.div`
   width: 700px;
@@ -24,15 +25,8 @@ const FloorPlanWrapper = styled.div`
   margin-left: 20px;
 `;
 
-type coords = {
-  viewIndex: number;
-  y: number;
-  x: number;
-  degrees: number;
-};
-
 type FloorPlanDotProps = {
-  coords: coords;
+  coords: Coords;
 };
 
 const FloorPlanDot = styled.div`
@@ -46,7 +40,7 @@ const FloorPlanDot = styled.div`
 `;
 
 type ViewProps = {
-  coords: coords;
+  coords: Coords;
 };
 
 export function View(props: ViewProps) {
