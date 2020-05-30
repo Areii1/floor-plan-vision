@@ -23,6 +23,8 @@ const FloorPlanWrapper = styled.div`
   width: 200px;
   height: 200px;
   margin-left: 20px;
+  display: flex;
+  align-items: flex-end;
 `;
 
 type FloorPlanDotProps = {

@@ -7,9 +7,15 @@ import { ViewDetails } from "./apiServices/getViewDetails";
 const Wrapper = styled.div`
   width: 1000px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   margin: auto;
+`;
+
+const ViewSectionWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NavigationButton = styled.div`
@@ -18,6 +24,23 @@ const NavigationButton = styled.div`
   border: none;
   font-size: 4em;
   cursor: pointer;
+`;
+
+const ApartmentNavigationList = styled.ul`
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ApartmentNavigationListButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const ApartmentNavigationListButtonText = styled.h3`
+  color: blue;
 `;
 
 enum status {
@@ -44,14 +67,14 @@ function App() {
   >(initialViewDetailProcess);
   const [currentImageIndex, setCurrentImageIndex] = React.useState<number>(0);
 
-  const fetchViewDetails = async () => {
+  const fetchViewDetails = async (id: number) => {
     try {
       setGetViewDetailsProcess({
         status: status.LOADING,
         data: undefined,
         error: undefined,
       });
-      const getViewDetailsResponse = await getViewDetails(1);
+      const getViewDetailsResponse = await getViewDetails(id);
       setGetViewDetailsProcess({
         status: status.SUCCESS,
         data: getViewDetailsResponse as ViewDetails,
@@ -67,7 +90,7 @@ function App() {
   };
 
   React.useEffect(() => {
-    fetchViewDetails();
+    fetchViewDetails(1);
   }, []);
 
   const handlePreviousClick = () => {
@@ -100,7 +123,7 @@ function App() {
       }
       case status.SUCCESS: {
         return (
-          <>
+          <ViewSectionWrapper>
             <NavigationButton
               onClick={handlePreviousClick}
               title="previous view"
@@ -114,21 +137,54 @@ function App() {
             <NavigationButton onClick={handleNextClick} title="next view">
               <h5>&gt;</h5>
             </NavigationButton>
-          </>
+          </ViewSectionWrapper>
         );
       }
       case status.ERROR: {
         return (
           <div>
             <h5>Could not fetch view</h5>
-            <button onClick={fetchViewDetails}>try again</button>
+            <button onClick={() => fetchViewDetails(0)}>try again</button>
           </div>
         );
       }
     }
   };
 
-  return <Wrapper>{getViewSection()}</Wrapper>;
+  return (
+    <Wrapper>
+      <ApartmentNavigationList>
+        <li>
+          <ApartmentNavigationListButton>
+            <ApartmentNavigationListButtonText
+              onClick={() => fetchViewDetails(1)}
+            >
+              apartment 1
+            </ApartmentNavigationListButtonText>
+          </ApartmentNavigationListButton>
+        </li>
+        <li>
+          <ApartmentNavigationListButton>
+            <ApartmentNavigationListButtonText
+              onClick={() => fetchViewDetails(2)}
+            >
+              apartment 2
+            </ApartmentNavigationListButtonText>
+          </ApartmentNavigationListButton>
+        </li>
+        <li>
+          <ApartmentNavigationListButton>
+            <ApartmentNavigationListButtonText
+              onClick={() => fetchViewDetails(3)}
+            >
+              apartment 3
+            </ApartmentNavigationListButtonText>
+          </ApartmentNavigationListButton>
+        </li>
+      </ApartmentNavigationList>
+      {getViewSection()}
+    </Wrapper>
+  );
 }
 
 export default App;
