@@ -25,45 +25,48 @@ enum Status {
   ERROR,
 }
 
-type ViewDetailsProcess = {
-  status: Status;
-  data: ViewDetails | undefined;
-  error: Error | undefined;
-};
+type ViewDetailsProcess =
+  | {
+      status: Status.INITIAL;
+    }
+  | {
+      status: Status.LOADING;
+    }
+  | {
+      status: Status.SUCCESS;
+      data: ViewDetails;
+    }
+  | {
+      status: Status.ERROR;
+      error: Error;
+    };
 
 // type ApartmentViewProps = {
 
 // }
 
 export const ApartmentView = (props: any) => {
-  const initialViewDetailProcess = {
-    status: Status.INITIAL,
-    data: undefined,
-    error: undefined,
-  };
   const [getViewDetailsProcess, setGetViewDetailsProcess] = React.useState<
     ViewDetailsProcess
-  >(initialViewDetailProcess);
+  >({
+    status: Status.INITIAL,
+  });
   const [currentImageIndex, setCurrentImageIndex] = React.useState<number>(0);
 
   const fetchViewDetails = async (id: number) => {
     try {
       setGetViewDetailsProcess({
         status: Status.LOADING,
-        data: undefined,
-        error: undefined,
       });
       setCurrentImageIndex(0);
       const getViewDetailsResponse = await getViewDetails(id);
       setGetViewDetailsProcess({
         status: Status.SUCCESS,
         data: getViewDetailsResponse,
-        error: undefined,
       });
     } catch (getViewDetailsError) {
       setGetViewDetailsProcess({
         status: Status.ERROR,
-        data: undefined,
         error: getViewDetailsError,
       });
     }
@@ -75,18 +78,22 @@ export const ApartmentView = (props: any) => {
   }, [props.match.params.id]);
 
   const handlePreviousClick = () => {
-    if (currentImageIndex - 1 >= 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    } else {
-      setCurrentImageIndex(getViewDetailsProcess.data!.views.length - 1);
+    if (getViewDetailsProcess.status === Status.SUCCESS) {
+      if (currentImageIndex - 1 >= 0) {
+        setCurrentImageIndex(currentImageIndex - 1);
+      } else {
+        setCurrentImageIndex(getViewDetailsProcess.data.views.length - 1);
+      }
     }
   };
 
   const handleNextClick = () => {
-    if (currentImageIndex < getViewDetailsProcess.data!.views.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    } else {
-      setCurrentImageIndex(0);
+    if (getViewDetailsProcess.status === Status.SUCCESS) {
+      if (currentImageIndex < getViewDetailsProcess.data.views.length - 1) {
+        setCurrentImageIndex(currentImageIndex + 1);
+      } else {
+        setCurrentImageIndex(0);
+      }
     }
   };
 
@@ -126,6 +133,9 @@ export const ApartmentView = (props: any) => {
           <button onClick={() => fetchViewDetails(1)}>try again</button>
         </div>
       );
+    }
+    default: {
+      return <div />;
     }
   }
 };
