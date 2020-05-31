@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link, Route } from "react-router-dom";
 import { View } from "./view/View";
 import { getViewDetails } from "./apiServices/getViewDetails";
 import { ViewDetails } from "./apiServices/getViewDetails";
@@ -164,36 +165,27 @@ function App() {
       ? getViewDetailsProcess.data!.apartmentId
       : 1;
 
+  const apartmentLinksListItems = ["", "", ""].map((item, index) => {
+    return (
+      <li key={index + 1}>
+        <Link to={`/${index + 1}`}>
+          <ApartmentNavigationListButton
+            onClick={() => fetchViewDetails(index + 1)}
+          >
+            <ApartmentNavigationListButtonText
+              active={currentApartmentId === index + 1}
+            >
+              {`apartment ${index + 1}`}
+            </ApartmentNavigationListButtonText>
+          </ApartmentNavigationListButton>
+        </Link>
+      </li>
+    );
+  });
   return (
     <Wrapper>
       <ApartmentNavigationList>
-        <li>
-          <ApartmentNavigationListButton onClick={() => fetchViewDetails(1)}>
-            <ApartmentNavigationListButtonText
-              active={currentApartmentId === 1}
-            >
-              apartment 1
-            </ApartmentNavigationListButtonText>
-          </ApartmentNavigationListButton>
-        </li>
-        <li>
-          <ApartmentNavigationListButton onClick={() => fetchViewDetails(2)}>
-            <ApartmentNavigationListButtonText
-              active={currentApartmentId === 2}
-            >
-              apartment 2
-            </ApartmentNavigationListButtonText>
-          </ApartmentNavigationListButton>
-        </li>
-        <li>
-          <ApartmentNavigationListButton onClick={() => fetchViewDetails(3)}>
-            <ApartmentNavigationListButtonText
-              active={currentApartmentId === 3}
-            >
-              apartment 3
-            </ApartmentNavigationListButtonText>
-          </ApartmentNavigationListButton>
-        </li>
+        {apartmentLinksListItems}
       </ApartmentNavigationList>
       {getViewSection()}
     </Wrapper>
