@@ -15,8 +15,8 @@ export type ViewDetails = {
   apartmentId: number;
 };
 
-export const getViewDetails = (id: number): Promise<ViewDetails | Error> => {
-  const newPromise = new Promise<ViewDetails | Error>((resolve, reject) => {
+export const getViewDetails = (id: number): Promise<ViewDetails> => {
+  const newPromise = new Promise<ViewDetails>((resolve, reject) => {
     const waitTime = Math.random() * 1000;
     setTimeout(() => {
       if (Math.random() < 0.9) {

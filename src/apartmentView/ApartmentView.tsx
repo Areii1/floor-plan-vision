@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { View } from "../view/View";
+import { RoomView } from "./roomView/RoomView";
 import { getViewDetails } from "../apiServices/getViewDetails";
 import { ViewDetails } from "../apiServices/getViewDetails";
 
@@ -18,7 +18,7 @@ const NavigationButton = styled.div`
   cursor: pointer;
 `;
 
-enum status {
+enum Status {
   INITIAL,
   LOADING,
   SUCCESS,
@@ -26,7 +26,7 @@ enum status {
 }
 
 type ViewDetailsProcess = {
-  status: status;
+  status: Status;
   data: ViewDetails | undefined;
   error: Error | undefined;
 };
@@ -37,7 +37,7 @@ type ViewDetailsProcess = {
 
 export const ApartmentView = (props: any) => {
   const initialViewDetailProcess = {
-    status: status.INITIAL,
+    status: Status.INITIAL,
     data: undefined,
     error: undefined,
   };
@@ -49,20 +49,20 @@ export const ApartmentView = (props: any) => {
   const fetchViewDetails = async (id: number) => {
     try {
       setGetViewDetailsProcess({
-        status: status.LOADING,
+        status: Status.LOADING,
         data: undefined,
         error: undefined,
       });
       setCurrentImageIndex(0);
       const getViewDetailsResponse = await getViewDetails(id);
       setGetViewDetailsProcess({
-        status: status.SUCCESS,
-        data: getViewDetailsResponse as ViewDetails,
+        status: Status.SUCCESS,
+        data: getViewDetailsResponse,
         error: undefined,
       });
     } catch (getViewDetailsError) {
       setGetViewDetailsProcess({
-        status: status.ERROR,
+        status: Status.ERROR,
         data: undefined,
         error: getViewDetailsError,
       });
@@ -91,23 +91,23 @@ export const ApartmentView = (props: any) => {
   };
 
   switch (getViewDetailsProcess.status) {
-    case status.INITIAL: {
+    case Status.INITIAL: {
       return <div />;
     }
-    case status.LOADING: {
+    case Status.LOADING: {
       return (
         <div>
           <h5>...</h5>
         </div>
       );
     }
-    case status.SUCCESS: {
+    case Status.SUCCESS: {
       return (
         <ViewSectionWrapper>
           <NavigationButton onClick={handlePreviousClick} title="previous view">
             <h5>&lt;</h5>
           </NavigationButton>
-          <View
+          <RoomView
             coords={getViewDetailsProcess.data!.views[currentImageIndex]!}
             apartmentId={getViewDetailsProcess.data!.apartmentId}
             viewsLength={getViewDetailsProcess.data!.views.length}
@@ -119,7 +119,7 @@ export const ApartmentView = (props: any) => {
         </ViewSectionWrapper>
       );
     }
-    case status.ERROR: {
+    case Status.ERROR: {
       return (
         <div>
           <h5>Could not fetch view</h5>

@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { getFloorPlan } from "../getFloorPlan";
-import { getImage } from "../getImage";
-import { Coords } from "../apiServices/getViewDetails";
+import { getFloorPlan } from "../../getFloorPlan";
+import { getImage } from "../../getImage";
+import { Coords } from "../../apiServices/getViewDetails";
 
 const Wrapper = styled.div`
   width: 700px;
   position: relative;
 `;
 
-const RoomView = styled.img`
+const RoomImage = styled.img`
   max-width: 700px;
   max-height: 700px;
 `;
@@ -46,14 +46,14 @@ type FloorPlanDotProps = {
   coords: Coords;
 };
 
-const FloorPlanDot = styled.div`
+const FloorPlanDot = styled.div<FloorPlanDotProps>`
   background-color: blue;
   width: 10px;
   height: 10px;
   border-radius: 10px;
   position: absolute;
-  bottom: ${(props: FloorPlanDotProps) => `${props.coords.y}%`};
-  left: ${(props: FloorPlanDotProps) => `${props.coords.x}%`};
+  bottom: ${(props) => `${props.coords.y}%`};
+  left: ${(props) => `${props.coords.x}%`};
 `;
 
 type ViewProps = {
@@ -63,7 +63,7 @@ type ViewProps = {
   viewsLength: number;
 };
 
-export function View(props: ViewProps) {
+export function RoomView(props: ViewProps) {
   const [displayFloorPlan, setDisplayFloorPlan] = React.useState<boolean>(true);
   const [hoveringOverFloorPlan, setHoveringOverFloorPlan] = React.useState<
     boolean
@@ -85,7 +85,7 @@ export function View(props: ViewProps) {
   return (
     <Wrapper>
       <h4>{`${props.currentImageIndex + 1}/${props.viewsLength}`}</h4>
-      <RoomView
+      <RoomImage
         src={getImage(props.apartmentId, props.coords.viewIndex)}
         alt="apartment view"
       />
